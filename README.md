@@ -1,6 +1,6 @@
 # movies
 
-A new Flutter project.
+Sebuah project flutter yang menampilkan daftar film dari API The Movie Database (TMDb). Project ini dibuat untuk memmpelajari akses api serta clean architecture dalam flutter. Penggunaan firebase auth juga digunakan untuk login dan register. Serta edit profile.
 
 ## Getting Started
 
@@ -14,3 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Lesson Learned
+
+1.Clean Architecture dalam Flutter , yaitu menggunakan 3 layer yaitu Presentation, Domain, dan Data. 
