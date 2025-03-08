@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/firebase_options.dart';
+import 'package:movies/widgets/screens/home/home_screen.dart';
 import 'package:movies/widgets/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LoginPage(),
+      home: HomePage(),
     );
   }
 }
