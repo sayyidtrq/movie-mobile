@@ -53,6 +53,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return;
     }
 
+    // Show immediate feedback
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Saving profile changes...'),
+        backgroundColor: Colors.orange,
+        duration: Duration(seconds: 1),
+      ),
+    );
+
     setState(() {
       _isLoading = true;
     });
@@ -67,6 +76,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       'favoriteMovie': _favoriteMovieController.text,
     };
 
+    // Set a timeout to prevent extremely long waits
+
     final success = await _authService.updateUserProfile(updatedProfile);
 
     setState(() {
@@ -75,12 +86,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile updated successfully')),
+        const SnackBar(
+          content: Text('Profile updated successfully'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
       );
       Navigator.pop(context, true);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to update profile')),
+        const SnackBar(
+          content:
+              Text('Failed to update profile, please check your connection'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
+        ),
       );
     }
   }

@@ -60,6 +60,79 @@ class AuthService {
     }
   }
 
+  Future<bool> addMovieToFavorites(Map<String, dynamic> movieData) async {
+    if (currentUser == null) return false;
+
+    try {
+      // Use movie ID as document ID to prevent duplicates
+      await _firestore
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('favorites')
+          .doc(movieData['id'].toString())
+          .set({
+        ...movieData,
+        'addedAt': FieldValue.serverTimestamp(),
+      });
+      return true;
+    } catch (e) {
+      print("Error adding movie to favorites: $e");
+      return false;
+    }
+  }
+
+  Future<bool> removeMovieFromFavorites(String movieId) async {
+    if (currentUser == null) return false;
+
+    try {
+      await _firestore
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('favorites')
+          .doc(movieId)
+          .delete();
+      return true;
+    } catch (e) {
+      print("Error removing movie from favorites: $e");
+      return false;
+    }
+  }
+
+  Future<bool> isMovieInFavorites(String movieId) async {
+    if (currentUser == null) return false;
+
+    try {
+      final doc = await _firestore
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('favorites')
+          .doc(movieId)
+          .get();
+      return doc.exists;
+    } catch (e) {
+      print("Error checking favorite status: $e");
+      return false;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getFavoriteMovies() async {
+    if (currentUser == null) return [];
+
+    try {
+      final snapshot = await _firestore
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('favorites')
+          .orderBy('addedAt', descending: true)
+          .get();
+
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    } catch (e) {
+      print("Error getting favorite movies: $e");
+      return [];
+    }
+  }
+
   // Login User
   Future<Map<String, dynamic>> loginWithEmail(
       String email, String password) async {
@@ -148,28 +221,33 @@ class AuthService {
   }
 
   // Update user profile with retry
+  // Update user profile with optimized retry mechanism
   Future<bool> updateUserProfile(Map<String, dynamic> data) async {
     if (currentUser == null) return false;
 
     try {
-      // Try up to 3 times
-      for (int attempt = 0; attempt < 3; attempt++) {
+      // First attempt without delay
+      try {
+        await _firestore.collection('users').doc(currentUser!.uid).update(data);
+        return true;
+      } catch (e) {
+        // Only retry once with a shorter delay
         try {
+          await Future.delayed(const Duration(milliseconds: 300));
           await _firestore
               .collection('users')
               .doc(currentUser!.uid)
               .update(data);
           return true;
         } catch (e) {
-          if (attempt == 2) rethrow;
-          await Future.delayed(Duration(seconds: 1));
+          print("Error updating user profile: $e");
+          return false;
         }
       }
     } catch (e) {
       print("Error updating user profile: $e");
       return false;
     }
-    return false;
   }
 
   // Logout User

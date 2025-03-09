@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/models/movie_detail_model.dart';
+import 'package:movies/services/auth_services.dart';
 import 'package:movies/services/movie_service.dart';
 import 'package:intl/intl.dart';
 
@@ -14,11 +15,89 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   late Future<MovieDetailModel> movieDetail;
+  final AuthService _authService = AuthService();
+  bool _isInFavorites = false;
+  bool _isCheckingFavorite = true;
 
   @override
   void initState() {
     super.initState();
     movieDetail = APIservices().getMovieDetails(widget.movieId);
+    _checkFavoriteStatus();
+  }
+
+  Future<void> _checkFavoriteStatus() async {
+    if (!_authService.isLoggedIn) {
+      setState(() {
+        _isCheckingFavorite = false;
+      });
+      return;
+    }
+
+    final isFavorite =
+        await _authService.isMovieInFavorites(widget.movieId.toString());
+
+    if (mounted) {
+      setState(() {
+        _isInFavorites = isFavorite;
+        _isCheckingFavorite = false;
+      });
+    }
+  }
+
+  Future<void> _toggleFavorite(MovieDetailModel movie) async {
+    if (!_authService.isLoggedIn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please login to add favorites'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    final movieId = movie.id.toString();
+    bool success;
+
+    if (_isInFavorites) {
+      success = await _authService.removeMovieFromFavorites(movieId);
+      if (success && mounted) {
+        setState(() {
+          _isInFavorites = false;
+        });
+      }
+    } else {
+      // Convert MovieDetailModel to map for Firestore
+      final movieData = {
+        'id': movie.id,
+        'title': movie.title,
+        'posterPath': movie.posterPath,
+        'backdropPath': movie.backdropPath,
+        'voteAverage': movie.voteAverage,
+        'voteCount': movie.voteCount,
+        'overview': movie.overview,
+      };
+
+      success = await _authService.addMovieToFavorites(movieData);
+      if (success && mounted) {
+        setState(() {
+          _isInFavorites = true;
+        });
+      }
+    }
+
+    // Show feedback
+    if (success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            _isInFavorites ? 'Added to favorites' : 'Removed from favorites',
+          ),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 1),
+        ),
+      );
+    }
   }
 
   String formatCurrency(int amount) {
@@ -29,6 +108,37 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FutureBuilder<MovieDetailModel>(
+          future: movieDetail,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting ||
+                !snapshot.hasData ||
+                _isCheckingFavorite) {
+              return const FloatingActionButton(
+                onPressed: null,
+                backgroundColor: Colors.grey,
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2,
+                  ),
+                ),
+              );
+            }
+
+            final movie = snapshot.data!;
+
+            return FloatingActionButton(
+              onPressed: () => _toggleFavorite(movie),
+              backgroundColor: _isInFavorites ? Colors.white : Colors.red,
+              child: Icon(
+                _isInFavorites ? Icons.favorite : Icons.favorite_border,
+                color: _isInFavorites ? Colors.red : Colors.white,
+              ),
+            );
+          }),
       body: FutureBuilder<MovieDetailModel>(
         future: movieDetail,
         builder: (context, snapshot) {

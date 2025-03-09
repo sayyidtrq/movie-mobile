@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/models/movie_model.dart';
+import 'package:movies/services/auth_services.dart';
 import 'package:movies/services/movie_service.dart';
 import 'package:movies/widgets/screens/movies/movies_detail.dart';
 
@@ -42,13 +43,6 @@ class _MoviePageState extends State<MoviePage> {
   bool _hasMore = true;
 
   @override
-  void initState() {
-    super.initState();
-    _loadMovies();
-    _scrollController.addListener(_scrollListener);
-  }
-
-  @override
   void dispose() {
     _searchController.dispose();
     _scrollController.removeListener(_scrollListener);
@@ -62,6 +56,86 @@ class _MoviePageState extends State<MoviePage> {
         !_isLoading &&
         _hasMore) {
       _loadMoreMovies();
+    }
+  }
+
+  final AuthService _authService = AuthService();
+  Set<String> _favoriteMovieIds = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMovies();
+    _scrollController.addListener(_scrollListener);
+    _loadFavoriteIds();
+  }
+
+  // Add this method to load favorite IDs
+  Future<void> _loadFavoriteIds() async {
+    if (!_authService.isLoggedIn) return;
+
+    final favorites = await _authService.getFavoriteMovies();
+    setState(() {
+      _favoriteMovieIds = favorites.map((m) => m['id'].toString()).toSet();
+    });
+  }
+
+  // Add this method to toggle favorites
+  Future<void> _toggleFavorite(Movie movie) async {
+    if (!_authService.isLoggedIn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please login to add favorites'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    final movieId = movie.id.toString();
+    final isCurrentlyFavorite = _favoriteMovieIds.contains(movieId);
+
+    bool success;
+    if (isCurrentlyFavorite) {
+      success = await _authService.removeMovieFromFavorites(movieId);
+      if (success) {
+        setState(() {
+          _favoriteMovieIds.remove(movieId);
+        });
+      }
+    } else {
+      // Convert Movie to map for Firestore
+      final movieData = {
+        'id': movie.id,
+        'title': movie.title,
+        'posterPath': movie.posterPath,
+        'backdropPath': movie.backdropPath,
+        'voteAverage': movie.voteAverage,
+        'voteCount': movie.voteCount,
+        'overview': movie.overview,
+      };
+
+      success = await _authService.addMovieToFavorites(movieData);
+      if (success) {
+        setState(() {
+          _favoriteMovieIds.add(movieId);
+        });
+      }
+    }
+
+    // Show feedback
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            isCurrentlyFavorite
+                ? 'Removed from favorites'
+                : 'Added to favorites',
+          ),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 1),
+        ),
+      );
     }
   }
 
