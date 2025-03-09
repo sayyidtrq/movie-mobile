@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   late Future<List<Movie>> upComingMovies;
   late Future<List<Movie>> topRatedMovies;
   late Future<List<Movie>> popularMovies;
+  late Future<List<Movie>> trendingMovies;
 
   int _selectedIndex = 0;
 
@@ -29,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     topRatedMovies = APIservices().getTopRated();
     upComingMovies = APIservices().getUpComing();
     popularMovies = APIservices().getPopular();
+    trendingMovies = APIservices().getTrendingMovies();
   }
 
   void _onItemTapped(int index) {
@@ -46,14 +48,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //remove debug banner
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'YukNonton',
+          'YUKNONTON',
           style: TextStyle(
             color: Colors.red,
-            fontFamily: 'Poppins',
+            fontFamily: 'BebasNeue',
+            fontWeight: FontWeight.bold,
             fontSize: 18.0,
           ),
         ),
@@ -76,6 +81,88 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    FutureBuilder(
+                      future: trendingMovies,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(color: Colors.red),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Center(
+                            child: Text('Error loading trending movies'),
+                          );
+                        } else {
+                          final List<Movie> movies = snapshot.data ?? [];
+                          return carousel.CarouselSlider.builder(
+                            itemCount: movies.length,
+                            itemBuilder: (context, index, _) {
+                              final movie = movies[index];
+                              return Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Stack(
+                                    children: [
+                                      // Poster Image
+                                      Image.network(
+                                        'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                        fit: BoxFit.cover,
+                                        height: 250,
+                                        width: 180,
+                                      ),
+                                      // Title overlay at bottom
+                                      Positioned(
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0, horizontal: 10.0),
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                                Colors.black.withOpacity(0.8),
+                                                Colors.transparent,
+                                              ],
+                                            ),
+                                          ),
+                                          child: Text(
+                                            movie.title,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.0,
+                                              fontFamily: 'Poppins',
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            options: carousel.CarouselOptions(
+                              height: 250.0,
+                              viewportFraction: 0.4,
+                              enableInfiniteScroll: true,
+                              autoPlay: true,
+                              autoPlayInterval: Duration(seconds: 3),
+                              autoPlayAnimationDuration:
+                                  Duration(milliseconds: 800),
+                              enlargeCenterPage: true,
+                            ),
+                          );
+                        }
+                      },
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

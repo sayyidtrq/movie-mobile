@@ -19,11 +19,8 @@ class _MoviePageState extends State<MoviePage> {
     'All',
     'Action',
     'Adventure',
-    'Animation',
     'Comedy',
     'Crime',
-    'Documentary',
-    'Drama',
     'Family',
     'Fantasy',
     'History',
@@ -90,10 +87,9 @@ class _MoviePageState extends State<MoviePage> {
         newMovies = await APIservices().searchMovies(_searchQuery, _page);
       } else if (_selectedGenre != 'All') {
         // Filter by genre
-        // Assuming you have a method in APIservices to get movies by genre
         newMovies = await APIservices().getMoviesByGenre(_selectedGenre, _page);
       } else {
-        // Default: get popular movies
+        // Default: get all movies sorted alphabetically
         newMovies = await APIservices().getPopular(page: _page);
       }
 
@@ -144,46 +140,56 @@ class _MoviePageState extends State<MoviePage> {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            title: const Text(
-              'Movies',
-              style: TextStyle(
-                color: Colors.red,
-                fontFamily: 'Poppins',
-                fontSize: 18.0,
-              ),
-            ),
             centerTitle: true,
             floating: true,
             pinned: true,
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(60),
+              preferredSize: const Size.fromHeight(10), // Reduce height
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: TextField(
-                  controller: _searchController,
-                  onSubmitted: (_) => _onSearch(),
-                  decoration: InputDecoration(
-                    hintText: 'Search movies...',
-                    hintStyle: const TextStyle(fontFamily: 'Poppins'),
-                    prefixIcon: const Icon(Icons.search, color: Colors.red),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.clear, color: Colors.grey),
-                      onPressed: () {
-                        _searchController.clear();
-                        if (_searchQuery.isNotEmpty) {
-                          setState(() {
-                            _searchQuery = '';
-                          });
-                          _loadMovies();
-                        }
-                      },
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 6), // Smaller padding
+                child: Container(
+                  height: 40, // Set a specific height for the search bar
+                  child: TextField(
+                    controller: _searchController,
+                    onSubmitted: (_) => _onSearch(),
+                    style: const TextStyle(
+                      color: Colors.red, // Red text color
+                      fontFamily: 'Poppins',
+                      fontSize: 14, // Smaller font size
                     ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
+                    decoration: InputDecoration(
+                      hintText: 'Search movies...',
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14, // Smaller hint text
+                        color: Colors.red, // Red hint text
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 10), // Tighter padding
+                      prefixIcon: const Icon(Icons.search,
+                          color: Colors.red, size: 18), // Smaller icon
+                      suffixIcon: IconButton(
+                        iconSize: 18, // Smaller clear icon
+                        icon: const Icon(Icons.clear,
+                            color: Colors.red), // Red clear icon
+                        onPressed: () {
+                          _searchController.clear();
+                          if (_searchQuery.isNotEmpty) {
+                            setState(() {
+                              _searchQuery = '';
+                            });
+                            _loadMovies();
+                          }
+                        },
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(10), // Smaller radius
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),

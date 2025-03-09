@@ -16,9 +16,24 @@ class APIservices {
   final searchApi =
       "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=";
   final allMoviesApi = "https://api.themoviedb.org/3/movie/";
+  final trendingMoviesApi =
+      "https://api.themoviedb.org/3/trending/movie/day?api_key=$apiKey";
   // for nowShowing moveis
   Future<List<Movie>> getTopRated() async {
     Uri url = Uri.parse(topRatedApi);
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body)['results'];
+      List<Movie> movies = data.map((movie) => Movie.fromMap(movie)).toList();
+      return movies;
+    } else {
+      throw Exception("Failed to load data");
+    }
+  }
+
+  Future<List<Movie>> getTrendingMovies() async {
+    Uri url = Uri.parse(trendingMoviesApi);
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -72,15 +87,33 @@ class APIservices {
   }
 
   Future<List<Movie>> searchMovies(String query, int page) async {
-    Uri url = Uri.parse("$searchApi$query&page=$page");
-    final response = await http.get(url);
+    try {
+      Uri url = Uri.parse("$searchApi$query&page=$page");
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body)['results'];
-      List<Movie> movies = data.map((movie) => Movie.fromMap(movie)).toList();
-      return movies;
-    } else {
-      throw Exception("Failed to search movies");
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final List<dynamic> data = responseData['results'] ?? [];
+        List<Movie> movies = [];
+
+        for (var movieData in data) {
+          try {
+            final movie = Movie.fromMap(movieData);
+            movies.add(movie);
+          } catch (e) {
+            print('Error parsing movie: $e');
+            // Skip this movie and continue with the next one
+          }
+        }
+
+        return movies;
+      } else {
+        print('Search API returned status code: ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      print('Error in searchMovies: $e');
+      return []; // Return empty list instead of throwing exception
     }
   }
 

@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'YukNonton',
       //set the theme colour for this movie app : black,red,and gray
       theme: ThemeData(
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: HomePage(),
+      home: const LoginPage(),
     );
   }
 }
