@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.red,
-          accentColor: Colors.black,
+          accentColor: const Color.fromARGB(255, 18, 17, 35),
           backgroundColor: Colors.grey,
-          cardColor: Colors.black,
+          cardColor: const Color.fromARGB(255, 18, 17, 35),
           errorColor: Colors.red,
           brightness: Brightness.dark,
         ),

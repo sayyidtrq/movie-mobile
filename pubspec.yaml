@@ -88,6 +88,10 @@ flutter:
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 700
         - asset : assets/fonts/BebasNeue.otf
+  assets:
+    - assets/animations/movieAnimation.json
+    - assets/animations/profileAnimation.json
+    - assets/images/developer.jpg
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

@@ -1,0 +1,8 @@
+// Correct way to disable problematic JDK transforms
+gradle.projectsEvaluated {
+    tasks.configureEach { task ->
+        if (task.name.contains('androidJdkImage') || task.name.contains('JdkImageTransform')) {
+            task.enabled = false
+        }
+    }
+}

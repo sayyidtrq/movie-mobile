@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:movies/services/movie_service.dart';
+import 'package:movies/widgets/screens/aboutme/about_screen.dart';
 import 'package:movies/widgets/screens/collection/collection.dart';
 import 'package:movies/widgets/screens/home/movie_pagination.dart';
 import 'package:movies/widgets/screens/movies/movie_screen.dart';
@@ -44,6 +45,7 @@ class _HomePageState extends State<HomePage> {
     const CollectionPage(),
     const MoviePage(),
     const ProfilePage(),
+    const AboutScreen(),
   ];
 
   @override
@@ -171,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 14,
-                            color: Colors.red,
+                            color: Color.fromARGB(255, 255, 255, 255),
                             fontFamily: 'Poppins',
                           ),
                         ),
@@ -192,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
-                              color: Colors.red,
+                              color: Color.fromARGB(255, 248, 248, 248),
                               fontFamily: 'Poppins',
                             ),
                           ),
@@ -344,15 +346,11 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 14,
-                            color: Colors.red,
+                            color: Color.fromARGB(255, 252, 252, 252),
                             fontFamily: 'Poppins',
                           ),
                         ),
                         TextButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                          ),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -369,7 +367,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
-                              color: Colors.red,
+                              color: Color.fromARGB(255, 254, 254, 254),
                               fontFamily: 'Poppins',
                             ),
                           ),
@@ -510,7 +508,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 14,
-                            color: Colors.red,
+                            color: Color.fromARGB(255, 255, 255, 255),
                             fontFamily: 'Poppins',
                           ),
                         ),
@@ -531,7 +529,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14,
-                              color: Colors.red,
+                              color: Color.fromARGB(255, 255, 255, 255),
                               fontFamily: 'Poppins',
                             ),
                           ),
@@ -687,6 +685,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'About'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.red,
