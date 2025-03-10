@@ -4,22 +4,22 @@ Sebuah project flutter yang menampilkan daftar film dari API The Movie Database 
 
 ## Features
 1. Login with email and password
-![](assets/images/login.png)
+<img src="assets/images/login.png" width="200">
 2. Register with email and password
-![](assets/images/register.png)
+<img src="assets/images/register.png" width="200">
 3. View trending, top-rated, upcoming, and popular movies in home screen
-![](assets/images/homescreen.png)
+<img src="assets/images/homescreen.png" width="200">
 4. Search movies by title, search movie by genre
-![](assets/images/searchscreen.png) ![](assets/images/filter.png)
+<img src="assets/images/searchscreen.png" width="200"> <img src="assets/images/filter.png" width="200">
 5. View movie details (title, poster, backdrop, release date, rating, overview, genres, and cast)
-![](assets/images/moviedetail.png)
+<img src="assets/images/moviedetail.png" width="200">
 6. Add movie to collection
-![](assets/images/collectionscreen.png)
+<img src="assets/images/collectionscreen.png" width="200">
 7. Edit profile 
-![](assets/images/edit_profile.png)
+<img src="assets/images/edit_profile.png" width="200">
 8. Logout
 9. Developer Info
-![](assets/images/aboutme1.png) ![](assets/images/aboutme.png)
+<img src="assets/images/aboutme1.png" width="200"> <img src="assets/images/aboutme.png" width="200">
 
 ## Location
 semua file yang berhubungan dengan project ini berada di folder `movies` , saya juga sedah menerapkan pembagian foldernya sedemikian rupa seperti:
