@@ -67,11 +67,6 @@ semua file yang berhubungan dengan project ini berada di folder `movies` , saya 
 - `cached_network_image` : digunakan untuk menampilkan gambar dari url
 - `tmdb_api` : digunakan untuk mengakses API TMDB
 
-## features
-- `login` : login dengan email dan password
-
-
-
 ## Lesson Learned
 
 Proyek YUKNONTON adalah aplikasi mobile yang memanfaatkan API TMDB dan Firebase. Aplikasi ini memungkinkan pengguna untuk registrasi akun menggunakan email, login ke dalam aplikasi, melihat daftar film yang sedang trending, top-rated, upcoming, serta popular movies, mencari film, melihat detail setiap film, memperbarui profil (menambahkan hobi, pekerjaan, dan film favorit), serta menambahkan film ke dalam koleksi pribadi.
