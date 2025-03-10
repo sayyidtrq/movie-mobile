@@ -15,7 +15,17 @@ class _AboutScreenState extends State<AboutScreen> {
     'github': 'https://github.com/johndoe',
     'favoriteMovies': ['Interstellar', 'The Pursuit of Happynes'],
     'hobbies': ['Coding', 'Hiking', 'Main basket', 'Tidur'],
-    'skills': ['Flutter', 'Dart', 'Firebase', 'Web Development'],
+    'skills': [
+      'Flutter',
+      'Dart',
+      'Firebase',
+      'Web Development',
+      'Django',
+      'NextJS',
+      'Laravel',
+      'Java (asdos DDP2)',
+      'Python',
+    ],
   };
 
   @override

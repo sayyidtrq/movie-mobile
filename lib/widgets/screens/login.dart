@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lottie/lottie.dart';
 import 'package:movies/services/auth_services.dart';
 import 'package:movies/widgets/screens/home/home_screen.dart';
 import 'package:movies/widgets/screens/register.dart';
@@ -57,18 +58,22 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            'YukNonton!',
+            'YUKNONTON',
             style: TextStyle(
               color: Colors.red,
-              fontFamily: 'Poppins',
+              fontFamily: 'Bebas Neue',
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Icon(
-            CupertinoIcons.video_camera_solid,
-            size: 120, // Increased icon size
-            color: Colors.red,
+          // Replacing the static icon with the animation
+          SizedBox(
+            height: 250,
+            width: 250,
+            child: Lottie.asset(
+              'assets/animations/movieAnimation2.json',
+              fit: BoxFit.contain,
+            ),
           ),
           const SizedBox(height: 32),
           Container(

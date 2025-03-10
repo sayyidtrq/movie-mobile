@@ -41,7 +41,7 @@ dependencies:
   http: ^1.3.0
   intl: ^0.18.0
   cloud_firestore: ^5.6.5
-  
+  lottie : ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +92,7 @@ flutter:
     - assets/animations/movieAnimation.json
     - assets/animations/profileAnimation.json
     - assets/images/developer.jpg
+    - assets/animations/movieAnimation2.json
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

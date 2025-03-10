@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:movies/widgets/screens/login.dart';
 import 'package:movies/services/auth_services.dart';
 
@@ -34,10 +35,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
 
     if (user != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Akun berhasil dibuat',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
       );
+
+      // Add a slight delay before navigation to ensure the user sees the message
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Navigate to login page
+      if (mounted) {
+        // Check if the widget is still in the tree
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -61,18 +84,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               const SizedBox(height: 60), // Add space at the top
               const Text(
-                'YukDaftar!',
+                'YUKDAFTAR!',
                 style: TextStyle(
                   color: Colors.red,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Bebas Neue',
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Icon(
-                CupertinoIcons.person_add_solid, // Icon for registration
-                size: 120,
-                color: Colors.red,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    CupertinoIcons.person_add_solid,
+                    size: 80,
+                    color: Colors.red,
+                  ),
+                  SizedBox(
+                    height: 120,
+                    width: 120,
+                    child: Lottie.asset(
+                      'assets/animations/movieAnimation.json',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 32),
               // Username field
