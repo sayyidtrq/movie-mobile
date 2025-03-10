@@ -2,6 +2,37 @@
 
 Sebuah project flutter yang menampilkan daftar film dari API The Movie Database (TMDb). Project ini dibuat untuk memmpelajari akses api serta clean architecture dalam flutter. Penggunaan firebase auth juga digunakan untuk login dan register. Serta edit profile.
 
+## Features
+1. Login with email and password
+2. Register with email and password
+3. View trending, top-rated, upcoming, and popular movies in home screen
+4. Search movies by title, search movie by genre
+5. View movie details (title, poster, backdrop, release date, rating, overview, genres, and cast)
+6. Add movie to collection
+7. Edit profile 
+8. Logout
+9. Developer Info
+
+## Location
+semua file yang berhubungan dengan project ini berada di folder `movies` , saya juga sedah menerapkan pembagian foldernya sedemikian rupa seperti:
+- `lib` : berisi file dart yang berhubungan dengan aplikasi
+- `models` : berisi file dart yang berhubungan dengan model data
+- `services` : berisi file dart yang berhubungan dengan service
+- `assets` : berisi file gambar yang digunakan dalam aplikasi
+- `screens` : berisi file dart yang berhubungan dengan tampilan aplikasi
+- `widgets` : berisi file dart yang berhubungan dengan widget yang digunakan dalam aplikasi
+
+## Plugins
+- `firebase_auth` : digunakan untuk autentikasi user
+- `firebase_core` : digunakan untuk menghubungkan aplikasi dengan firebase
+- `cloud_firestore` : digunakan untuk menyimpan data user
+- `http` : digunakan untuk melakukan request ke API
+- `lotte` : digunakan untuk menampilkan animasi
+- `intl` : digunakan untuk mengubah format tanggal
+- `cached_network_image` : digunakan untuk menampilkan gambar dari url
+- `tmdb_api` : digunakan untuk mengakses API TMDB
+
+
 ## Lesson Learned
 
 Proyek YUKNONTON adalah aplikasi mobile yang memanfaatkan API TMDB dan Firebase. Aplikasi ini memungkinkan pengguna untuk registrasi akun menggunakan email, login ke dalam aplikasi, melihat daftar film yang sedang trending, top-rated, upcoming, serta popular movies, mencari film, melihat detail setiap film, memperbarui profil (menambahkan hobi, pekerjaan, dan film favorit), serta menambahkan film ke dalam koleksi pribadi.
