@@ -3,23 +3,50 @@
 Sebuah project flutter yang menampilkan daftar film dari API The Movie Database (TMDb). Project ini dibuat untuk memmpelajari akses api serta clean architecture dalam flutter. Penggunaan firebase auth juga digunakan untuk login dan register. Serta edit profile.
 
 ## Features
-1. Login with email and password
-<img src="assets/images/login.png" width="200">
-2. Register with email and password
-<img src="assets/images/register.png" width="200">
-3. View trending, top-rated, upcoming, and popular movies in home screen
-<img src="assets/images/homescreen.png" width="200">
-4. Search movies by title, search movie by genre
-<img src="assets/images/searchscreen.png" width="200"> <img src="assets/images/filter.png" width="200">
-5. View movie details (title, poster, backdrop, release date, rating, overview, genres, and cast)
-<img src="assets/images/moviedetail.png" width="200">
-6. Add movie to collection
-<img src="assets/images/collectionscreen.png" width="200">
-7. Edit profile 
-<img src="assets/images/edit_profile.png" width="200">
-8. Logout
-9. Developer Info
-<img src="assets/images/aboutme1.png" width="200"> <img src="assets/images/aboutme.png" width="200">
+
+### 1. Authentication
+| Login | Registration |
+|:-----:|:------------:|
+| <img src="assets/images/login.png" width="300"> | <img src="assets/images/register.png" width="300"> |
+
+### 2. Movie Browsing
+View trending, top-rated, upcoming, and popular movies in home screen
+
+<p align="center">
+  <img src="assets/images/homescreen.png" width="300">
+</p>
+
+### 3. Search Functionality
+Search movies by title or filter by genre
+
+<p align="center">
+  <img src="assets/images/searchscreen.png" width="300"> 
+  <img src="assets/images/filter.png" width="300">
+</p>
+
+### 4. Movie Details
+View comprehensive movie information including title, poster, backdrop, release date, rating, overview, genres, and cast
+
+<p align="center">
+  <img src="assets/images/moviedetail.png" width="300">
+</p>
+
+### 5. Personal Collection
+Add and manage your favorite movies
+
+<p align="center">
+  <img src="assets/images/collectionscreen.png" width="300">
+</p>
+
+### 6. User Profile Management
+| Edit Profile | Developer Info |
+|:------------:|:-------------:|
+| <img src="assets/images/edit_profile.png" width="300"> | <img src="assets/images/aboutme1.png" width="300"> <img src="assets/images/aboutme.png" width="300"> |
+
+### 7. Additional Features
+- Logout functionality
+- Responsive UI design
+- Movie recommendations
 
 ## Location
 semua file yang berhubungan dengan project ini berada di folder `movies` , saya juga sedah menerapkan pembagian foldernya sedemikian rupa seperti:
