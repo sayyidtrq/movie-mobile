@@ -4,14 +4,22 @@ Sebuah project flutter yang menampilkan daftar film dari API The Movie Database 
 
 ## Features
 1. Login with email and password
+![](assets/images/login.png)
 2. Register with email and password
+![](assets/images/register.png)
 3. View trending, top-rated, upcoming, and popular movies in home screen
+![](assets/images/homescreen.png)
 4. Search movies by title, search movie by genre
+![](assets/images/searchscreen.png) ![](assets/images/filter.png)
 5. View movie details (title, poster, backdrop, release date, rating, overview, genres, and cast)
+![](assets/images/moviedetail.png)
 6. Add movie to collection
+![](assets/images/collectionscreen.png)
 7. Edit profile 
+![](assets/images/edit_profile.png)
 8. Logout
 9. Developer Info
+![](assets/images/aboutme1.png) ![](assets/images/aboutme.png)
 
 ## Location
 semua file yang berhubungan dengan project ini berada di folder `movies` , saya juga sedah menerapkan pembagian foldernya sedemikian rupa seperti:
@@ -31,6 +39,10 @@ semua file yang berhubungan dengan project ini berada di folder `movies` , saya 
 - `intl` : digunakan untuk mengubah format tanggal
 - `cached_network_image` : digunakan untuk menampilkan gambar dari url
 - `tmdb_api` : digunakan untuk mengakses API TMDB
+
+## features
+- `login` : login dengan email dan password
+
 
 
 ## Lesson Learned
